@@ -20,6 +20,8 @@ class DashboardController extends Controller
     public function userdashboard()
     {
         $user = Auth::user();
-        return view('UserDashboard')->with(array('username' => $user->name));
+      
+           return view('UserDashboard')->with(array('username' => $user->name));
+   
     }
 }

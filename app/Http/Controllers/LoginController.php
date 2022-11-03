@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Roles;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -37,12 +38,13 @@ class LoginController extends Controller
 
             $user = Auth::user();
             $role = Roles::with('users:role_id')->where('id', $user->role_id)->get();
-
+           
             if ($role[0]->name == 'Admin') {
                 // dd(  $user );
                 return redirect()->intended('admindashboard');
             }
             if ($role[0]->name == 'User') {
+                // exit();
                 return redirect()->intended('userdashboard');
             }
             // die($request->password);
@@ -73,5 +75,20 @@ class LoginController extends Controller
         Auth::logout();
 
         return Redirect('login');
+    }
+
+    public function test() {
+        //   $Roles = new Roles();
+        
+       $comments = Roles::with('userrr')->get();
+        dd($comments);
+        // $role = 'User';
+        // // $check = User::with(['roles' => function($check) {
+        // //     $check = $check->where('name', 'User');
+        // // }])->get();
+        // $check = User::with('roles')->whereHas('roles', function ($query) {
+        //     $query->where('name', 'User');
+        // })->first();
+        // dd($check->roles->name);
     }
 }

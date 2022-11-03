@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Roles;
+
 class CheckRole
 {
     /**
@@ -16,17 +17,24 @@ class CheckRole
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next,$role)
-    {
+    {        
+        $Roles = new Roles();
+        
+        // dd($Roles->users());
 
-        if (! auth()->check() ) {
-            return redirect()->to( 'login' );
+        // if (! auth()->check() ) {
+        //     return redirect()->to( 'login' );
+        // }
+
+        // if ($Roles->hasRole($role) != $role) {
+            if (!Auth::user()->hasRole($role)) {
+
+            abort(401, 'This action is unauthorized.');
+
         }
+      
+        return $next($request);
 
-        if (auth()->user()->role_id==$role) {
-            return $next($request);
-        }
-
-        return redirect()->to( 'errorpage' );
       
         
 }

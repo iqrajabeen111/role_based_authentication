@@ -18,7 +18,7 @@ use App\Http\Controllers\DashboardController;
 |
 */
 // Route::get('dashboard', [LoginController::class, 'dashboard'])->middleware(['is_verify_email', 'auth']);
-
+Route::get('test', [LoginController::class, 'test'])->name('test');
 Route::get('errorpage', [LoginController::class, 'errorpage'])->name('errorpage');
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::get('register', [RegisterController::class, 'index'])->name('register');
@@ -28,13 +28,13 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 // Route::get('dashboard', [LoginController::class, 'dashboard'])->middleware(['is_verify_email', 'auth']);
 
 
-Route::middleware('auth','is_verify_email', 'CheckRole:1')->group(function () {
+Route::middleware('auth','is_verify_email', 'CheckRole:Admin')->group(function () {
     
     Route::get('admindashboard', [DashboardController::class, 'admindashboard'])->name('admindashboard');
 
 
 });
-Route::middleware('auth','is_verify_email', 'CheckRole:2')->group(function () {
+Route::middleware('auth','is_verify_email', 'CheckRole:User')->group(function () {
     Route::get('userdashboard', [DashboardController::class, 'userdashboard'])->name('userdashboard');
 
 
